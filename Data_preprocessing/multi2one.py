@@ -10,7 +10,7 @@ dataset = 'btcv'  # btcv or chaos
 multi_labelPath_iso = '/root/autodl-tmp/Kim/kits23/dataset'
 output_path = '/root/autodl-tmp/Kim/kits23/dataset'
 multi_labels = os.listdir(multi_labelPath_iso)
-label_num = 1  # 指定哪个器官
+label_num = 2  # 指定哪个器官
 
 label_dict = {1:'kidney', 2:'tumor'}
 
@@ -34,7 +34,7 @@ for multi_label in tqdm(multi_labels):
     sitk_img = sitk.GetImageFromArray(numpyImage, isVector=False)
     sitk_img.SetOrigin(numpyOrigin)
     sitk_img.SetSpacing([1, 1, 1])
-    print(numpySpacing)
+    # print(numpySpacing)
     save_path = os.path.join(output_path,label_dict[label_num],'labelsTr_gt')
     if not os.path.exists(save_path):
         os.makedirs(save_path, exist_ok=True)
