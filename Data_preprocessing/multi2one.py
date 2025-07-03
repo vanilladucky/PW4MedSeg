@@ -28,8 +28,17 @@ for multi_label in tqdm(multi_labels):
     # print(numpySpacing, numpyImage.shape)  ## numpy Image 是只有0和1(代表图片里这个像素点是黑还是白)
     # 需要转化成坐标的形式
 
-    numpyImage[numpyImage != label_num] = 0
-    numpyImage[numpyImage == label_num] = 1
+    # start from all zeros
+    out = np.zeros_like(numpyImage, dtype=numpyImage.dtype)
+
+    # keep your organ as 1
+    out[numpyImage == label_num] = 1
+
+    # keep original “unlabeled” voxels as 4
+    out[numpyImage == 4] = 4
+
+    # now out has {0,1,4}
+    numpyImage = out
 
     sitk_img = sitk.GetImageFromArray(numpyImage, isVector=False)
     sitk_img.SetOrigin(numpyOrigin)
