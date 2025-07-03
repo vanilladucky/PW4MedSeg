@@ -6,17 +6,18 @@ from monai.transforms import Spacing
 import torch
 
 dataset = 'btcv'  # btcv or chaos
+data_path = '/root/autodl-tmp/Kim/kits23/dataset'
 multi_labelPath_ori = './dataset/{}/label'.format(dataset)
 multi_imagePath_ori = './dataset/{}/image'.format(dataset)
-multi_labelPath_iso = './dataset/{}/label_iso'.format(dataset)
-multi_imagePath_iso = './dataset/{}/image_iso'.format(dataset)
-multi_labels = os.listdir(multi_labelPath_ori)
-multi_images = os.listdir(multi_imagePath_ori)
+multi_labelPath_iso = '/root/autodl-tmp/Kim/kits23/dataset/label_iso'
+multi_imagePath_iso = '/root/autodl-tmp/Kim/kits23/dataset/image_iso'
+multi_labels = os.listdir(data_path)
+multi_images = os.listdir(data_path)
 os.makedirs(multi_imagePath_iso)
 os.makedirs(multi_labelPath_iso)
 
 for multi_label in multi_labels:
-    image_path = os.path.join(multi_labelPath_ori, multi_label)
+    image_path = os.path.join(data_path, multi_label, 'segmentation_pCE')
     sitk_img = sitk.ReadImage(image_path)  # 是个单label单块的文件
 
     ''' return order [z, y, x] , numpyImage, numpyOrigin, numpySpacing '''

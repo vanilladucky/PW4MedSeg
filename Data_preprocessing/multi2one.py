@@ -6,22 +6,15 @@ from monai.transforms import Spacing
 import torch
 
 dataset = 'btcv'  # btcv or chaos
-multi_labelPath_iso = './dataset/{}/label_iso'.format(dataset)
-output_path = './dataset/{}/'.format(dataset)
+multi_labelPath_iso = '/root/autodl-tmp/Kim/kits23/dataset'
+output_path = '/root/autodl-tmp/Kim/kits23/dataset'
 multi_labels = os.listdir(multi_labelPath_iso)
 label_num = 1  # 指定哪个器官
 
-# 设置保存路径，可自定义
-if dataset == 'btcv':
-    label_dict = {1: 'spleen', 2: 'right_kidney', 3: 'left_kidney', 6: 'liver'}
-elif dataset == 'chaos':
-    label_dict = {1: 'liver', 2: 'right_kidney', 3: 'left_kidney', 4: 'spleen'}
-else:
-    label_dict = {}
-    print('please set label_dict')
+label_dict = {1:'kidney', 2:'tumor'}
 
 for multi_label in multi_labels:
-    image_path = os.path.join(multi_labelPath_iso, multi_label)
+    image_path = os.path.join(multi_labelPath_iso, multi_label, 'segmentation_pCE.nii.gz')
     sitk_img = sitk.ReadImage(image_path)  # 是个单label单块的文件
     # print("img shape:", itk_img.shape)
     ''' return order [z, y, x] , numpyImage, numpyOrigin, numpySpacing '''
