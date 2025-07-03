@@ -10,7 +10,7 @@ dataset = 'btcv'  # btcv or chaos
 multi_labelPath_iso = '/root/autodl-tmp/Kim/kits23/dataset'
 output_path = '/root/autodl-tmp/Kim/kits23/dataset'
 multi_labels = os.listdir(multi_labelPath_iso)
-label_num = 2  # 指定哪个器官
+label_num = 1  # 指定哪个器官
 
 label_dict = {1:'kidney', 2:'tumor'}
 
