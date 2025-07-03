@@ -4,6 +4,7 @@ import os
 import SimpleITK as sitk
 from monai.transforms import Spacing
 import torch
+from tqdm import tqdm
 
 dataset = 'btcv'  # btcv or chaos
 multi_labelPath_iso = '/root/autodl-tmp/Kim/kits23/dataset'
@@ -13,7 +14,9 @@ label_num = 1  # 指定哪个器官
 
 label_dict = {1:'kidney', 2:'tumor'}
 
-for multi_label in multi_labels:
+for multi_label in tqdm(multi_labels):
+    if 'case_' not in multi_label:
+        continue
     image_path = os.path.join(multi_labelPath_iso, multi_label, 'segmentation_pCE.nii.gz')
     sitk_img = sitk.ReadImage(image_path)  # 是个单label单块的文件
     # print("img shape:", itk_img.shape)
@@ -22,7 +25,7 @@ for multi_label in multi_labels:
     numpyImage = sitk.GetArrayFromImage(sitk_img)  # # [z, y, x]
     numpyOrigin = np.array(sitk_img.GetOrigin())  # # [z, y, x]
     numpySpacing = np.array((sitk_img.GetSpacing()))  # # [z, y, x]
-    print(numpySpacing, numpyImage.shape)  ## numpy Image 是只有0和1(代表图片里这个像素点是黑还是白)
+    # print(numpySpacing, numpyImage.shape)  ## numpy Image 是只有0和1(代表图片里这个像素点是黑还是白)
     # 需要转化成坐标的形式
 
     numpyImage[numpyImage != label_num] = 0
